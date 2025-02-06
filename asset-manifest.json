@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/mumpysd/task-management/static/css/main.f855e6bc.css",
+    "main.js": "/mumpysd/task-management/static/js/main.db12c100.js",
+    "static/js/488.8c0c78d8.chunk.js": "/mumpysd/task-management/static/js/488.8c0c78d8.chunk.js",
+    "static/media/logo.svg": "/mumpysd/task-management/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/mumpysd/task-management/index.html",
+    "main.f855e6bc.css.map": "/mumpysd/task-management/static/css/main.f855e6bc.css.map",
+    "main.db12c100.js.map": "/mumpysd/task-management/static/js/main.db12c100.js.map",
+    "488.8c0c78d8.chunk.js.map": "/mumpysd/task-management/static/js/488.8c0c78d8.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f855e6bc.css",
+    "static/js/main.db12c100.js"
+  ]
+}
