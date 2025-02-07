@@ -9,10 +9,12 @@ import About from './components/About';
 import { AuthProvider } from './contexts/AuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const basename = "/task-management";
+
 root.render(
   <React.StrictMode>
     <AuthProvider>
-        <Router>
+        <Router basename={basename}>
         <Routes>
           {/* Parent route for App component */}
           <Route path="/" element={<App />}>
