@@ -17,7 +17,7 @@ const TaskManagement = () => {
     });
 
   const createOrUpdateTask = () => {
-   if(!auth.currentUser) return alert("Please login/register first!");
+  // if(!auth.currentUser) return alert("Please login/register first!");
    if (!taskData.title.trim()) return; // Prevent adding empty tasks
    const formattedData = {
       ...taskData,
@@ -43,10 +43,10 @@ const TaskManagement = () => {
   return (
      <Box sx={{flexGrow: 1}}>
         <Grid container spacing={2}>
-            <Grid item xs={6}>
+            <Grid item xs={12} lg={6}>
                 <CreateUpdateTaskForm taskData={taskData} setTaskData={setTaskData} createOrUpdateTask={createOrUpdateTask} resetForm = {resetForm} resetTaskList={resetTaskList} />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} lg={6}>
                <TaskList taskList={taskList} resetTaskList={resetTaskList} deleteTask={deleteTask}/>
             </Grid>
         </Grid>
