@@ -1,11 +1,12 @@
-import { Box, Container, TextField, Button, FormControl, Select, InputLabel, MenuItem } from "@mui/material";
+import { Box, Container, TextField, Button, FormControl, Select, InputLabel, MenuItem, Grid } from "@mui/material";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { v4 as uuidv4 } from 'uuid';  
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import dayjs from "dayjs";
-
-
+import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
+import ReportProblemIcon from "@mui/icons-material/ReportProblem";
+import LowPriorityIcon from "@mui/icons-material/LowPriority";
 
 const CreateUpdateTaskForm = ({taskData, setTaskData, createOrUpdateTask, resetForm}) => {
 
@@ -17,6 +18,28 @@ const CreateUpdateTaskForm = ({taskData, setTaskData, createOrUpdateTask, resetF
           [name]: value,
         }));
     }
+
+    // Define icons, colors, and styles for different priority levels
+    const priorityStyles = {
+      High: { 
+        icon: <PriorityHighIcon sx={{ color: "red", marginRight: 1 }} />, 
+        color: "red", 
+        hoverColor: "rgba(255, 0, 0, 0.2)", // Light red hover background
+        selectedBg: "rgba(255, 0, 0, 0.4)" // Darker red when selected
+      },
+      Medium: { 
+        icon: <ReportProblemIcon sx={{ color: "orange", marginRight: 1 }} />, 
+        color: "orange", 
+        hoverColor: "rgba(255, 165, 0, 0.2)", // Light orange hover background
+        selectedBg: "rgba(255, 165, 0, 0.4)" // Darker orange when selected
+      },
+      Low: { 
+        icon: <LowPriorityIcon sx={{ color: "green", marginRight: 1 }} />, 
+        color: "green", 
+        hoverColor: "rgba(0, 128, 0, 0.2)", // Light green hover background
+        selectedBg: "rgba(0, 128, 0, 0.4)" // Darker green when selected
+      },
+    };
 
     const handleSubmit  = (e) => {
        e.preventDefault();
@@ -89,130 +112,103 @@ const CreateUpdateTaskForm = ({taskData, setTaskData, createOrUpdateTask, resetF
                           }}
                     />
                     
-                    <FormControl sx={{color: "#000", borderRadius: "8px"}} fullWidth>
-                      <DesktopDatePicker 
-                        style={{color: "#000", width: "100"}}
+                    <Grid container spacing={2}>
+                      {/* Due Date Picker */}
+                      <Grid item xs={12} md={6}>
+                        <FormControl fullWidth>
+                          <DesktopDatePicker
+                            sx={{
+                              mb: 2,
+                              "& .MuiInputBase-input": { color: "#000" },
+                              "& .MuiInputLabel-root": { color: "#000" },
+                              "& .MuiOutlinedInput-notchedOutline": { borderColor: "#000" },
+                              "& .MuiOutlinedInput-root": {
+                                "& fieldset": { borderColor: "#000" },
+                                "&:hover fieldset": { borderColor: "#000" },
+                                "&.Mui-focused fieldset": { borderColor: "#4A77C3" },
+                              },
+                            }}
+                            label="Due At"
+                            name="dueAt"
+                            minDate={dayjs()} // Disable past dates
+                            value={taskData.dueAt}
+                            onChange={handleDueDateChange}
+                            renderInput={(params) => <TextField {...params} />}
+                          />
+                        </FormControl>
+                      </Grid>
+
+                      {/* Remind Me Date Picker */}
+                      <Grid item xs={12} md={6}>
+                        <FormControl fullWidth>
+                          <DesktopDatePicker
+                            sx={{
+                              mb: 2,
+                              "& .MuiInputBase-input": { color: "#000" },
+                              "& .MuiInputLabel-root": { color: "#000" },
+                              "& .MuiOutlinedInput-notchedOutline": { borderColor: "#000" },
+                              "& .MuiOutlinedInput-root": {
+                                "& fieldset": { borderColor: "#000" },
+                                "&:hover fieldset": { borderColor: "#000" },
+                                "&.Mui-focused fieldset": { borderColor: "#4A77C3" },
+                              },
+                            }}
+                            label="Remind At"
+                            name="remindAt"
+                            minDate={dayjs()} // Disable past dates
+                            maxDate={taskData.dueAt} // Remind date should be before or on Due date
+                            value={taskData.remindAt}
+                            onChange={handleRemindDateChange}
+                            renderInput={(params) => <TextField {...params} />}
+                          />
+                        </FormControl>
+                      </Grid>
+                    </Grid>
+
+                    <FormControl sx={{ color: "#000", borderRadius: "8px" }} fullWidth>
+                      <InputLabel sx={{ color: "#000" }}>Priority</InputLabel>
+                      <Select
                         sx={{
-                          mb: 2,
-                          '& .MuiInputBase-input': { color: '#000' }, // Text color (blue)
-                          '& .MuiInputLabel-root': { color: '#000' }, // Label color (blue)
-                          '& .MuiOutlinedInput-notchedOutline': { color: '#000' }, // Label color (blue)
-                         '& .MuiOutlinedInput-root': {
-                              '& fieldset': { borderColor: '#000' }, // Border color (blue)
-                              "&:hover fieldset": { borderColor: "#000" }, // Border color on hover
-                              "&.Mui-focused fieldset": { borderColor: "#4A77C3" }, // Border color on focus
-                            },
-                          '&:hover .MuiOutlinedInput-notchedOutline': {
-                            borderColor: '#000', // Border color when hovered
-                          },
-                          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                            borderColor: '#000', // Border color when focused
-                          },
+                          textAlign: "left",
+                          "& .MuiInputBase-input": { color: "#000" }, // Text color
+                          "& .MuiOutlinedInput-notchedOutline": { borderColor: "#000" },
+                          "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#000" },
+                          "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#4A77C3" },
+                          borderRadius: "8px",
+                          display: "flex",
+                          alignItems: "center",
                         }}
-                        label="Due At"
-                        name="dueAt"
-                        minDate={dayjs()}
+                        value={taskData.priority}
+                        name="priority"
+                        defaultValue=""
                         required
-                        value={taskData.dueAt}
-                        onChange={handleDueDateChange}
-                        renderInpur={(params) => 
-                          <TextField
-                          {...params}
-                          sx={{
-                            mb: 2,
-                            '& .MuiInputBase-input': { color: '#000' }, // Text color (blue)
-                            '& .MuiInputLabel-root': { color: '#000' }, // Label color (blue)
-                            '& .MuiOutlinedInput-notchedOutline': { color: '#000' }, // Label color (blue)
-                            '& .MuiOutlinedInput-root': {
-                              '& fieldset': { borderColor: '#000' }, // Border color (blue)
-                              "&:hover fieldset": { borderColor: "#000" }, // Border color on hover
-                              "&.Mui-focused fieldset": { borderColor: "#4A77C3" }, // Border color on focus
-                            },
-                            '&:hover .MuiOutlinedInput-notchedOutline': {
-                              borderColor: '#000', // Border color when hovered
-                            },
-                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                              borderColor: '#000', // Border color when focused
-                            },
-                          }}
-                        />
-                        }>
-                      </DesktopDatePicker>
-                    </FormControl>
-
-                    <FormControl sx={{color: "#000", borderRadius: "8px"}} fullWidth>
-                      <DesktopDatePicker 
-                        style={{color: "#000", width: "100"}}
-                        sx={{
-                          mb: 2,
-                          '& .MuiInputBase-input': { color: '#000' }, // Text color (blue)
-                          '& .MuiInputLabel-root': { color: '#000' }, // Label color (blue)
-                          '& .MuiOutlinedInput-notchedOutline': { color: '#000' }, // Label color (blue)
-                         '& .MuiOutlinedInput-root': {
-                              '& fieldset': { borderColor: '#000' }, // Border color (blue)
-                              "&:hover fieldset": { borderColor: "#000" }, // Border color on hover
-                              "&.Mui-focused fieldset": { borderColor: "#4A77C3" }, // Border color on focus
-                            },
-                          '&:hover .MuiOutlinedInput-notchedOutline': {
-                            borderColor: '#000', // Border color when hovered
-                          },
-                          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                            borderColor: '#000', // Border color when focused
-                          },
-                        }}
-                        label="Remind At"
-                        name="remindAt"
-                        minDate={dayjs()}
-                        maxDate={dayjs(taskData.dueAt)}
-                        required
-                        value={taskData.remindAt}
-                        onChange={handleRemindDateChange}
-                        renderInpur={(params) => 
-                          <TextField
-                          {...params}
-                          sx={{
-                            mb: 2,
-                            '& .MuiInputBase-input': { color: '#000' }, // Text color (blue)
-                            '& .MuiInputLabel-root': { color: '#000' }, // Label color (blue)
-                            '& .MuiOutlinedInput-notchedOutline': { color: '#000' }, // Label color (blue)
-                            '& .MuiOutlinedInput-root': {
-                              '& fieldset': { borderColor: '#000' }, // Border color (blue)
-                              "&:hover fieldset": { borderColor: "#000" }, // Border color on hover
-                              "&.Mui-focused fieldset": { borderColor: "#4A77C3" }, // Border color on focus
-                            },
-                            '&:hover .MuiOutlinedInput-notchedOutline': {
-                              borderColor: '#000', // Border color when hovered
-                            },
-                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                              borderColor: '#000', // Border color when focused
-                            },
-                          }}
-                        />
-                        }>
-                      </DesktopDatePicker>
-                    </FormControl>
-
-
-                    <FormControl sx={{color: "#000", borderRadius: "8px"}} fullWidth>
-                        <InputLabel sx={{ color: "#000" }}>Priority</InputLabel>
-                        <Select 
-                          sx={{
-                            textAlign: "left",
-                            '& .MuiInputBase-input': { color: '#000' }, // Text color (blue)
-                            "& .MuiOutlinedInput-notchedOutline": { borderColor: "#000" },
-                            "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#000" },
-                            "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#4A77C3" },
-                            borderRadius: "8px",
-                          }}
-                          value={taskData.priority}
-                          name="priority"
-                          defaultValue= ""
-                          required
-                          onChange={handleChange} label="Select an option">
-                            <MenuItem value="High">High</MenuItem>
-                            <MenuItem value="Medium">Medium</MenuItem>
-                            <MenuItem value="Low">Low</MenuItem>
-                        </Select>
+                        onChange={handleChange}
+                        label="Priority"
+                        renderValue={(selected) =>
+                          selected ? (
+                            <Box sx={{ display: "flex", alignItems: "center", color: priorityStyles[selected].color }}>
+                              {priorityStyles[selected].icon} {selected}
+                            </Box>
+                          ) : (
+                            "Select an option"
+                          )
+                        }
+                      >
+                        {Object.entries(priorityStyles).map(([key, { icon, color, hoverColor, selectedBg }]) => (
+                          <MenuItem
+                            key={key}
+                            value={key}
+                            sx={{
+                              "&:hover": { backgroundColor: hoverColor },
+                              "&.Mui-selected": { backgroundColor: selectedBg, color: "#fff" },
+                              "&.Mui-selected:hover": { backgroundColor: selectedBg }, // Maintain same color on hover after selection
+                            }}
+                          >
+                            {icon}
+                            <span style={{ color }}>{key}</span>
+                          </MenuItem>
+                        ))}
+                      </Select>
                     </FormControl>
 
                      <Box

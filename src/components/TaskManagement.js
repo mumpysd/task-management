@@ -14,11 +14,12 @@ const TaskManagement = () => {
       description: '',
       remindAt: dayjs(),
       dueAt: dayjs(),
-      priority: ''
+      priority: '',
+      flagged: false,
+      markAsCompleted: false
     });
 
   const createOrUpdateTask = () => {
-   console.log(taskData);
   // if(!auth.currentUser) return alert("Please login/register first!");
    if (!taskData.title.trim()) return; // Prevent adding empty tasks
    const formattedData = {
@@ -27,7 +28,7 @@ const TaskManagement = () => {
       dueAt: taskData.dueAt ? dayjs(taskData.dueAt).format("YYYY-MM-DD") : "",
     };
    setTaskList((prevList) => [...prevList, formattedData]);
-   setTaskData({id: '', title: '', description: '', remindAt: dayjs(), dueAt: dayjs(), priority: '' }); // Clear input fields
+   setTaskData({id: '', title: '', description: '', remindAt: dayjs(), dueAt: dayjs(), priority: '', flagged: false, markAsCompleted: false }); // Clear input fields
   }
 
   const resetTaskList = () => {
@@ -35,13 +36,26 @@ const TaskManagement = () => {
   }
 
   const resetForm = () => {
-   setTaskData({ id: '', title: '', description: '', remindAt: dayjs(), dueAt: dayjs(), priority: '' }); // Clear input fields
+   setTaskData({ id: '', title: '', description: '', remindAt: dayjs(), dueAt: dayjs(), priority: '', flagged: false, markAsCompleted: false }); // Clear input fields
   }
 
   const deleteTask = (taskId) => {
    setTaskList((prevList) => prevList.filter((task) => task.id !== taskId));
   }
   
+  const toggleFlag = (taskId) => {
+      setTaskList((prevList) => 
+         prevList.map((task) => task.id === taskId ? {...task, flagged: !task.flagged} : task
+         )
+      );
+  };
+
+  const markAsCompleted = (taskId) => {
+      setTaskList((prevList) => 
+         prevList.map((task) => task.id === taskId ? {...task, markAsCompleted: !task.markAsCompleted} : task
+      )
+    )
+  }
 
   return (
      <Box sx={{flexGrow: 1}}>
@@ -50,7 +64,7 @@ const TaskManagement = () => {
                 <CreateUpdateTaskForm taskData={taskData} setTaskData={setTaskData} createOrUpdateTask={createOrUpdateTask} resetForm = {resetForm} resetTaskList={resetTaskList} />
             </Grid>
             <Grid item xs={12} lg={6}>
-               <TaskList taskList={taskList} resetTaskList={resetTaskList} deleteTask={deleteTask}/>
+               <TaskList taskList={taskList} resetTaskList={resetTaskList} deleteTask={deleteTask} markAsCompleted={markAsCompleted} toggleFlag={toggleFlag}/>
             </Grid>
         </Grid>
      </Box>
