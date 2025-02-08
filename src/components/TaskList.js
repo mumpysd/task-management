@@ -14,7 +14,8 @@ const TaskList = ({taskList, resetTaskList, deleteTask}) => {
                         taskList.map((task, index) => (
                             <li style={{listStyleType: "none", border: "1px solid #000", borderRadius: "10px", padding: "10px 30px 10px 10px", marginBottom: "10px", position: "relative"}} key={task.id}>
                                <p style={{margin: "0px", fontSize: "12px"}}>Task {index + 1}: {task.title}</p>
-                               <p style={{margin: "0px", fontSize: "11px"}}>{task.deadline && `Remind At: ${task.deadline}`} {task.priority && `|| Priority: ${task.priority}`}</p>
+                               <p style={{margin: "0px", fontSize: "11px"}}>{task.remindAt && `Remind At: ${task.dueAt}`} {task.priority && `|| Due At: ${task.dueAt}`}</p>
+                               <p style={{margin: "0px", fontSize: "11px"}}>{task.priority && `Priority: ${task.priority}`}</p>
                                {task.description && (
                                 <p style={{margin: "0px", fontSize: "10px"}}>Description: {task.description}</p>
                                )}

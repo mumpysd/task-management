@@ -12,19 +12,22 @@ const TaskManagement = () => {
       id: '',
       title: '',
       description: '',
-      deadline: dayjs(),
+      remindAt: dayjs(),
+      dueAt: dayjs(),
       priority: ''
     });
 
   const createOrUpdateTask = () => {
+   console.log(taskData);
   // if(!auth.currentUser) return alert("Please login/register first!");
    if (!taskData.title.trim()) return; // Prevent adding empty tasks
    const formattedData = {
       ...taskData,
-      deadline: taskData.deadline ? dayjs(taskData.deadline).format("YYYY-MM-DD") : "",
+      remindAt: taskData.remindAt ? dayjs(taskData.remindAt).format("YYYY-MM-DD") : "",
+      dueAt: taskData.dueAt ? dayjs(taskData.dueAt).format("YYYY-MM-DD") : "",
     };
    setTaskList((prevList) => [...prevList, formattedData]);
-   setTaskData({id: '', title: '', description: '', deadline: dayjs(), priority: '' }); // Clear input fields
+   setTaskData({id: '', title: '', description: '', remindAt: dayjs(), dueAt: dayjs(), priority: '' }); // Clear input fields
   }
 
   const resetTaskList = () => {
@@ -32,7 +35,7 @@ const TaskManagement = () => {
   }
 
   const resetForm = () => {
-   setTaskData({ id: '', title: '', description: '', deadline: dayjs(), priority: '' }); // Clear input fields
+   setTaskData({ id: '', title: '', description: '', remindAt: dayjs(), dueAt: dayjs(), priority: '' }); // Clear input fields
   }
 
   const deleteTask = (taskId) => {

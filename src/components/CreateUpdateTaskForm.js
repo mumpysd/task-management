@@ -23,8 +23,12 @@ const CreateUpdateTaskForm = ({taskData, setTaskData, createOrUpdateTask, resetF
        createOrUpdateTask();
     }
 
-    const handleDateChange = (newValue) => {
-      setTaskData((prev) => ({ ...prev, date: newValue }));
+    const handleRemindDateChange = (newValue) => {
+      setTaskData((prev) => ({ ...prev, remindAt: newValue }));
+    };
+
+    const handleDueDateChange = (newValue) => {
+      setTaskData((prev) => ({ ...prev, dueAt: newValue }));
     };
 
     return (
@@ -85,7 +89,6 @@ const CreateUpdateTaskForm = ({taskData, setTaskData, createOrUpdateTask, resetF
                           }}
                     />
                     
-
                     <FormControl sx={{color: "#000", borderRadius: "8px"}} fullWidth>
                       <DesktopDatePicker 
                         style={{color: "#000", width: "100"}}
@@ -106,13 +109,12 @@ const CreateUpdateTaskForm = ({taskData, setTaskData, createOrUpdateTask, resetF
                             borderColor: '#000', // Border color when focused
                           },
                         }}
-                        label="Remind At"
-                        name="deadline"
+                        label="Due At"
+                        name="dueAt"
                         minDate={dayjs()}
                         required
-                        defaultValue={dayjs('').format("YYYY-MM-DD")}
-                        value={taskData.deadline}
-                        onChange={handleDateChange}
+                        value={taskData.dueAt}
+                        onChange={handleDueDateChange}
                         renderInpur={(params) => 
                           <TextField
                           {...params}
@@ -137,6 +139,59 @@ const CreateUpdateTaskForm = ({taskData, setTaskData, createOrUpdateTask, resetF
                         }>
                       </DesktopDatePicker>
                     </FormControl>
+
+                    <FormControl sx={{color: "#000", borderRadius: "8px"}} fullWidth>
+                      <DesktopDatePicker 
+                        style={{color: "#000", width: "100"}}
+                        sx={{
+                          mb: 2,
+                          '& .MuiInputBase-input': { color: '#000' }, // Text color (blue)
+                          '& .MuiInputLabel-root': { color: '#000' }, // Label color (blue)
+                          '& .MuiOutlinedInput-notchedOutline': { color: '#000' }, // Label color (blue)
+                         '& .MuiOutlinedInput-root': {
+                              '& fieldset': { borderColor: '#000' }, // Border color (blue)
+                              "&:hover fieldset": { borderColor: "#000" }, // Border color on hover
+                              "&.Mui-focused fieldset": { borderColor: "#4A77C3" }, // Border color on focus
+                            },
+                          '&:hover .MuiOutlinedInput-notchedOutline': {
+                            borderColor: '#000', // Border color when hovered
+                          },
+                          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                            borderColor: '#000', // Border color when focused
+                          },
+                        }}
+                        label="Remind At"
+                        name="remindAt"
+                        minDate={dayjs()}
+                        maxDate={dayjs(taskData.dueAt)}
+                        required
+                        value={taskData.remindAt}
+                        onChange={handleRemindDateChange}
+                        renderInpur={(params) => 
+                          <TextField
+                          {...params}
+                          sx={{
+                            mb: 2,
+                            '& .MuiInputBase-input': { color: '#000' }, // Text color (blue)
+                            '& .MuiInputLabel-root': { color: '#000' }, // Label color (blue)
+                            '& .MuiOutlinedInput-notchedOutline': { color: '#000' }, // Label color (blue)
+                            '& .MuiOutlinedInput-root': {
+                              '& fieldset': { borderColor: '#000' }, // Border color (blue)
+                              "&:hover fieldset": { borderColor: "#000" }, // Border color on hover
+                              "&.Mui-focused fieldset": { borderColor: "#4A77C3" }, // Border color on focus
+                            },
+                            '&:hover .MuiOutlinedInput-notchedOutline': {
+                              borderColor: '#000', // Border color when hovered
+                            },
+                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                              borderColor: '#000', // Border color when focused
+                            },
+                          }}
+                        />
+                        }>
+                      </DesktopDatePicker>
+                    </FormControl>
+
 
                     <FormControl sx={{color: "#000", borderRadius: "8px"}} fullWidth>
                         <InputLabel sx={{ color: "#000" }}>Priority</InputLabel>
