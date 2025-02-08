@@ -2,6 +2,9 @@ import { Box, Container, TextField, Button, FormControl, Select, InputLabel, Men
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { v4 as uuidv4 } from 'uuid';  
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import dayjs from "dayjs";
+
 
 
 const CreateUpdateTaskForm = ({taskData, setTaskData, createOrUpdateTask, resetForm}) => {
@@ -26,7 +29,7 @@ const CreateUpdateTaskForm = ({taskData, setTaskData, createOrUpdateTask, resetF
 
     return (
         <Container>
-            <Box sx={{backgroundColor: "#000", color: "#fff", height: "80vh", padding: "15px",  position: 'relative',  textAlign: 'right'}}>
+            <Box sx={{backgroundColor: "#f1f2f2", color: "#000", height: "80vh", padding: "15px",  position: 'relative',  textAlign: 'right'}}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <form onSubmit={handleSubmit} style={{ width: '100%', height: "100%"}}>
                     <TextField
@@ -36,17 +39,19 @@ const CreateUpdateTaskForm = ({taskData, setTaskData, createOrUpdateTask, resetF
                         onChange={handleChange}
                         sx={{
                             mb: 2,
-                            '& .MuiInputBase-input': { color: '#fff' }, // Text color (blue)
-                            '& .MuiInputLabel-root': { color: '#fff' }, // Label color (blue)
-                            '& .MuiOutlinedInput-notchedOutline': { color: '#fff' }, // Label color (blue)
+                            '& .MuiInputBase-input': { color: '#000' }, // Text color (blue)
+                            '& .MuiInputLabel-root': { color: '#000' }, // Label color (blue)
+                            '& .MuiOutlinedInput-notchedOutline': { color: '#000' }, // Label color (blue)
                             '& .MuiOutlinedInput-root': {
-                              '& fieldset': { borderColor: '#fff' }, // Border color (blue)
+                              '& fieldset': { borderColor: '#000' }, // Border color (blue)
+                              "&:hover fieldset": { borderColor: "#000" }, // Border color on hover
+                              "&.Mui-focused fieldset": { borderColor: "#4A77C3" }, // Border color on focus
                             },
                             '&:hover .MuiOutlinedInput-notchedOutline': {
-                              borderColor: '#f1f2f2', // Border color when hovered
+                              borderColor: '#000', // Border color when hovered
                             },
                             '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                              borderColor: '#f1f2f2', // Border color when focused
+                              borderColor: '#000', // Border color when focused
                             },
                           }}
                         fullWidth
@@ -63,42 +68,49 @@ const CreateUpdateTaskForm = ({taskData, setTaskData, createOrUpdateTask, resetF
                         fullWidth
                         sx={{
                             mb: 2,
-                            '& .MuiInputBase-input': { color: '#fff' }, // Text color (blue)
-                            '& .MuiInputLabel-root': { color: '#fff' }, // Label color (blue)
-                            '& .MuiOutlinedInput-notchedOutline': { color: '#fff' }, // Label color (blue)
-                            '& .MuiOutlinedInput-root': {
-                              '& fieldset': { borderColor: '#fff' }, // Border color (blue)
+                            '& .MuiInputBase-input': { color: '#000' }, // Text color (blue)
+                            '& .MuiInputLabel-root': { color: '#000' }, // Label color (blue)
+                            '& .MuiOutlinedInput-notchedOutline': { color: '#000' }, // Label color (blue)
+                           '& .MuiOutlinedInput-root': {
+                              '& fieldset': { borderColor: '#000' }, // Border color (blue)
+                              "&:hover fieldset": { borderColor: "#000" }, // Border color on hover
+                              "&.Mui-focused fieldset": { borderColor: "#4A77C3" }, // Border color on focus
                             },
                             '&:hover .MuiOutlinedInput-notchedOutline': {
-                              borderColor: '#f1f2f2', // Border color when hovered
+                              borderColor: '#000', // Border color when hovered
                             },
                             '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                              borderColor: '#f1f2f2', // Border color when focused
+                              borderColor: '#000', // Border color when focused
                             },
                           }}
                     />
                     
 
-                    <FormControl sx={{color: "#fff", borderRadius: "8px"}} fullWidth>
-                      <DatePicker 
-                        style={{color: "#fff", width: "100"}}
+                    <FormControl sx={{color: "#000", borderRadius: "8px"}} fullWidth>
+                      <DesktopDatePicker 
+                        style={{color: "#000", width: "100"}}
                         sx={{
                           mb: 2,
-                          '& .MuiInputBase-input': { color: '#fff' }, // Text color (blue)
-                          '& .MuiInputLabel-root': { color: '#fff' }, // Label color (blue)
-                          '& .MuiOutlinedInput-notchedOutline': { color: '#fff' }, // Label color (blue)
-                          '& .MuiOutlinedInput-root': {
-                            '& fieldset': { borderColor: '#fff' }, // Border color (blue)
-                          },
+                          '& .MuiInputBase-input': { color: '#000' }, // Text color (blue)
+                          '& .MuiInputLabel-root': { color: '#000' }, // Label color (blue)
+                          '& .MuiOutlinedInput-notchedOutline': { color: '#000' }, // Label color (blue)
+                         '& .MuiOutlinedInput-root': {
+                              '& fieldset': { borderColor: '#000' }, // Border color (blue)
+                              "&:hover fieldset": { borderColor: "#000" }, // Border color on hover
+                              "&.Mui-focused fieldset": { borderColor: "#4A77C3" }, // Border color on focus
+                            },
                           '&:hover .MuiOutlinedInput-notchedOutline': {
-                            borderColor: '#f1f2f2', // Border color when hovered
+                            borderColor: '#000', // Border color when hovered
                           },
                           '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                            borderColor: '#f1f2f2', // Border color when focused
+                            borderColor: '#000', // Border color when focused
                           },
                         }}
-                        label="Select Date"
+                        label="Remind At"
                         name="deadline"
+                        minDate={dayjs()}
+                        required
+                        defaultValue={dayjs('').format("YYYY-MM-DD")}
                         value={taskData.deadline}
                         onChange={handleDateChange}
                         renderInpur={(params) => 
@@ -106,37 +118,41 @@ const CreateUpdateTaskForm = ({taskData, setTaskData, createOrUpdateTask, resetF
                           {...params}
                           sx={{
                             mb: 2,
-                            '& .MuiInputBase-input': { color: '#fff' }, // Text color (blue)
-                            '& .MuiInputLabel-root': { color: '#fff' }, // Label color (blue)
-                            '& .MuiOutlinedInput-notchedOutline': { color: '#fff' }, // Label color (blue)
+                            '& .MuiInputBase-input': { color: '#000' }, // Text color (blue)
+                            '& .MuiInputLabel-root': { color: '#000' }, // Label color (blue)
+                            '& .MuiOutlinedInput-notchedOutline': { color: '#000' }, // Label color (blue)
                             '& .MuiOutlinedInput-root': {
-                              '& fieldset': { borderColor: '#fff' }, // Border color (blue)
+                              '& fieldset': { borderColor: '#000' }, // Border color (blue)
+                              "&:hover fieldset": { borderColor: "#000" }, // Border color on hover
+                              "&.Mui-focused fieldset": { borderColor: "#4A77C3" }, // Border color on focus
                             },
                             '&:hover .MuiOutlinedInput-notchedOutline': {
-                              borderColor: '#f1f2f2', // Border color when hovered
+                              borderColor: '#000', // Border color when hovered
                             },
                             '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                              borderColor: '#f1f2f2', // Border color when focused
+                              borderColor: '#000', // Border color when focused
                             },
                           }}
                         />
                         }>
-                      </DatePicker>
+                      </DesktopDatePicker>
                     </FormControl>
 
-                    <FormControl sx={{color: "#fff", borderRadius: "8px"}} fullWidth>
-                        <InputLabel sx={{ color: "#fff" }}>Priority</InputLabel>
+                    <FormControl sx={{color: "#000", borderRadius: "8px"}} fullWidth>
+                        <InputLabel sx={{ color: "#000" }}>Priority</InputLabel>
                         <Select 
                           sx={{
                             textAlign: "left",
-                            '& .MuiInputBase-input': { color: '#fff' }, // Text color (blue)
-                            "& .MuiOutlinedInput-notchedOutline": { borderColor: "#fff" },
-                            "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#fff" },
-                            "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#fff" },
+                            '& .MuiInputBase-input': { color: '#000' }, // Text color (blue)
+                            "& .MuiOutlinedInput-notchedOutline": { borderColor: "#000" },
+                            "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#000" },
+                            "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#4A77C3" },
                             borderRadius: "8px",
                           }}
                           value={taskData.priority}
                           name="priority"
+                          defaultValue= ""
+                          required
                           onChange={handleChange} label="Select an option">
                             <MenuItem value="High">High</MenuItem>
                             <MenuItem value="Medium">Medium</MenuItem>
@@ -154,10 +170,10 @@ const CreateUpdateTaskForm = ({taskData, setTaskData, createOrUpdateTask, resetF
                         p: 2,
                         }}
                      >
-                        <Button type="button" onClick={resetForm} variant="outlined" color="#fff" sx={{ mb: 2, marginRight: "10px",fontSize: "12px"  }}>
+                        <Button type="button" onClick={resetForm} variant="outlined" color="#000" sx={{ mb: 2, marginRight: "10px",fontSize: "12px"  }}>
                             Discard
                         </Button>
-                        <Button type="submit" variant="contained" color="secondary" sx={{ mb: 2, fontSize: "12px"  }}>
+                        <Button type="submit" variant="contained" sx={{ mb: 2, fontSize: "12px", backgroundColor: "#00D199", color: "#fff" }}>
                             Submit
                         </Button>
                     </Box>

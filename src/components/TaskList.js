@@ -5,14 +5,14 @@ import IconButton from '@mui/material/IconButton';
 const TaskList = ({taskList, resetTaskList, deleteTask}) => {
     return (
         <Container>
-            <Box sx={{backgroundColor: "#000", color: "#fff", height: "80vh", padding: "15px", position: "relative"}}>
+            <Box sx={{backgroundColor: "#eed2d2", color: "#000", height: "80vh", padding: "15px", position: "relative"}}>
                {taskList.length === 0 ? <Typography sx={{textAlign: "center", display: "flex", height: "100%", justifyContent: "center", alignItems: "center"}}>Task List is Empty</Typography> : (
                 <>
                      <Typography>Task List:</Typography>
                      <ul style={{padding: "0px", height: "60vh", overflowY: "auto"}}>
                      {
                         taskList.map((task, index) => (
-                            <li style={{listStyleType: "none", border: "1px solid #fff", borderRadius: "10px", padding: "10px 30px 10px 10px", marginBottom: "10px", position: "relative"}} key={task.id}>
+                            <li style={{listStyleType: "none", border: "1px solid #000", borderRadius: "10px", padding: "10px 30px 10px 10px", marginBottom: "10px", position: "relative"}} key={task.id}>
                                <p style={{margin: "0px", fontSize: "12px"}}>Task {index + 1}: {task.title}</p>
                                <p style={{margin: "0px", fontSize: "11px"}}>{task.deadline && `Remind At: ${task.deadline}`} {task.priority && `|| Priority: ${task.priority}`}</p>
                                {task.description && (
@@ -22,7 +22,7 @@ const TaskList = ({taskList, resetTaskList, deleteTask}) => {
                                <IconButton onClick={() => deleteTask(task.id)}
                                  sx={{
                                     fontSize: 'small',
-                                    color: 'white',  // Change icon color to white
+                                    color: '#000',  // Change icon color to white
                                     position: 'absolute',  // Position the icon absolutely
                                     top: 0,  // Position at the top of the task
                                     right: 0,  // Position at the right side
@@ -45,7 +45,7 @@ const TaskList = ({taskList, resetTaskList, deleteTask}) => {
                         p: 2,
                         }}
                     >
-                        <Button onClick={resetTaskList} type="button" variant="outlined" color="#fff" sx={{ mb: 2, fontSize: "12px" }}>
+                        <Button onClick={resetTaskList} type="button" variant="outlined" color="#000" sx={{ mb: 2, fontSize: "12px" }}>
                             Reset
                         </Button>
                     </Box>
